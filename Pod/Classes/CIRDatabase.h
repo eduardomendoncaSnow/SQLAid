@@ -17,7 +17,7 @@
 
 @property(readonly, nonatomic) NSString *path;
 @property(strong, nonatomic) NSString *temporaryDirectory;
-@property(copy, nonatomic) void (^willExecuteCIRBlock)(NSString *);
+@property(copy, nonatomic) void (^willExecuteBlock)(NSString *);
 
 - (instancetype)initWithPath:(NSString *)databasePath;
 

@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/CopyIsRight/SQLAid"
   s.license          = 'MIT'
   s.author           = { "Pietro Caselani" => "pietro.caselani@involves.com.br" }
-  s.source           = { :git => "git@github.com:CopyIsRight/SQLAid.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/CopyIsRight/SQLAid.git", :tag => s.version.to_s }
   s.platform         = :ios, '7.0'
   s.requires_arc     = true
   s.source_files     = 'Pod/Classes/**/*'

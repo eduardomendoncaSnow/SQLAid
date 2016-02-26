@@ -158,7 +158,7 @@
 {
 	CIRStatement *statement = [self compileStatement:sql withParameters:listParameters namedParameters:namedParameters];
 
-	if (_willExecuteCIRBlock != nil) _willExecuteCIRBlock(sql);
+	if (_willExecuteBlock != nil) _willExecuteBlock(sql);
 
 	int resultCode = [statement step];
 
@@ -171,7 +171,7 @@
 {
 	CIRStatement *statement = [self compileStatement:query withParameters:listParameters namedParameters:namedParameters];
 
-	if (_willExecuteCIRBlock != nil) _willExecuteCIRBlock(query);
+	if (_willExecuteBlock != nil) _willExecuteBlock(query);
 
 	return [[CIRResultSet alloc] initWithDatabase:self andStatement:statement];
 }
@@ -196,11 +196,11 @@
 		}
 	}
 
-	bindCount = values.count;
+	bindCount = (int) values.count;
 
 	for (int i = 0; i < bindCount; i++)
 	{
-		[statement bindObject:values[i] atIndex:i + 1];
+		[statement bindObject:values[(NSUInteger) i] atIndex:i + 1];
 	}
 
 	if (bindCount != bindTotalCount)
