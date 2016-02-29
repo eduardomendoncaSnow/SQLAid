@@ -185,6 +185,9 @@
 	NSMutableArray *values = [[NSMutableArray alloc] initWithCapacity:(NSUInteger) bindTotalCount];
 	[values addObjectsFromArray:listParameters];
 
+	for (NSUInteger j = listParameters.count; j < bindTotalCount; ++j)
+		values[j] = [NSNull null];
+
 	if ([namedParameters count] > 0)
 	{
 		int parameterIndex;
@@ -192,7 +195,7 @@
 		for (NSString *key in [namedParameters allKeys])
 		{
 			if ((parameterIndex = [statement bindIndexWithName:[@":" stringByAppendingString:key]]) > 0)
-				[values insertObject:namedParameters[key] atIndex:(NSUInteger) (parameterIndex - 1)];
+				values[(NSUInteger) (parameterIndex - 1)] = namedParameters[key];
 		}
 	}
 
