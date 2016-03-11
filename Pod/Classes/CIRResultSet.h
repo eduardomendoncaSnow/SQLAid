@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <sqlite3.h>
+#import <sqlite3/sqlite3.h>
 
 @class CIRDatabase;
 @class CIRStatement;

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "SQLAid"
-  s.version          = "0.1.1"
+  s.version          = "0.1.2"
   s.summary          = "Small SQLite wrapper."
   s.description      = "Small \"blocks oriented\" sqlite wrapping tool for Objective-C"
   s.homepage         = "https://github.com/CopyIsRight/SQLAid"
@@ -18,5 +18,6 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '7.0'
   s.requires_arc     = true
   s.source_files     = 'Pod/Classes/**/*'
-  s.library          = 'sqlite3'
+  
+  s.dependency 'sqlite3'
 end

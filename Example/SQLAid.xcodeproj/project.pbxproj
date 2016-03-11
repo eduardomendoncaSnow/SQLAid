@@ -7,18 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0025BED3948BE60EBFB76CAC /* Pods_SQLAid_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBB7FEFD1106513F50009409 /* Pods_SQLAid_Tests.framework */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		A3F3336AE8E5B0245825740B /* Pods_SQLAid_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 236E50017A2AE93856F9264D /* Pods_SQLAid_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		026A7A7F23730288349DFE12 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		08930B3354D146A2036C9C22 /* Pods-SQLAid_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLAid_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		0A8F06DA48CD81906FB868E1 /* SQLAid.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SQLAid.podspec; path = ../SQLAid.podspec; sourceTree = "<group>"; };
-		2D45E9A87061E24EF7BB7F3C /* Pods-SQLAid_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLAid_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		236E50017A2AE93856F9264D /* Pods_SQLAid_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SQLAid_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BDFB774A4E5BE2FFD4D5ABB /* Pods-SQLAid_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLAid_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -29,8 +31,6 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		DE9EE65C999705619057036C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		EBB7FEFD1106513F50009409 /* Pods_SQLAid_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SQLAid_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FCC7A826091B86A32909DEB7 /* Pods-SQLAid_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLAid_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,13 +41,22 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				0025BED3948BE60EBFB76CAC /* Pods_SQLAid_Tests.framework in Frameworks */,
+				A3F3336AE8E5B0245825740B /* Pods_SQLAid_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01605ECF3089F17D9625E5F4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3BDFB774A4E5BE2FFD4D5ABB /* Pods-SQLAid_Tests.debug.xcconfig */,
+				08930B3354D146A2036C9C22 /* Pods-SQLAid_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
@@ -55,7 +64,7 @@
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				919E6EA62D9E923FC5B2F438 /* Pods */,
+				01605ECF3089F17D9625E5F4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,7 +83,7 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				EBB7FEFD1106513F50009409 /* Pods_SQLAid_Tests.framework */,
+				236E50017A2AE93856F9264D /* Pods_SQLAid_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -108,15 +117,6 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		919E6EA62D9E923FC5B2F438 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				FCC7A826091B86A32909DEB7 /* Pods-SQLAid_Tests.debug.xcconfig */,
-				2D45E9A87061E24EF7BB7F3C /* Pods-SQLAid_Tests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -124,12 +124,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "SQLAid_Tests" */;
 			buildPhases = (
-				DE6DFA648DCA08A8793BB53C /* Check Pods Manifest.lock */,
+				3211314D8EDE7FB89072FDF7 /* Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
-				6A18F2D3404B8B6DBC02390D /* Embed Pods Frameworks */,
-				28B0E5AD80EB8C75F647BAD4 /* Copy Pods Resources */,
+				5A1B6512AF10F0C07ED3D91C /* Embed Pods Frameworks */,
+				BC13812B364B7886CC79506E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -180,22 +180,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		28B0E5AD80EB8C75F647BAD4 /* Copy Pods Resources */ = {
+		3211314D8EDE7FB89072FDF7 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6A18F2D3404B8B6DBC02390D /* Embed Pods Frameworks */ = {
+		5A1B6512AF10F0C07ED3D91C /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -210,19 +210,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DE6DFA648DCA08A8793BB53C /* Check Pods Manifest.lock */ = {
+		BC13812B364B7886CC79506E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLAid_Tests/Pods-SQLAid_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -325,7 +325,7 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCC7A826091B86A32909DEB7 /* Pods-SQLAid_Tests.debug.xcconfig */;
+			baseConfigurationReference = 3BDFB774A4E5BE2FFD4D5ABB /* Pods-SQLAid_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -347,7 +347,7 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D45E9A87061E24EF7BB7F3C /* Pods-SQLAid_Tests.release.xcconfig */;
+			baseConfigurationReference = 08930B3354D146A2036C9C22 /* Pods-SQLAid_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
