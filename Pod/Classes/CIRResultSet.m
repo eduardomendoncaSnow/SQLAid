@@ -26,11 +26,9 @@
 	{
 		_database = database;
 		_statement = statement;
-		
-		return self;
 	}
 	
-	return nil;
+	return self;
 }
 
 - (BOOL)next
