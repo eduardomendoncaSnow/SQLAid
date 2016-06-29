@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "SQLAid"
-  s.version          = "0.1.2"
+  s.version          = "0.1.3"
   s.summary          = "Small SQLite wrapper."
   s.description      = "Small \"blocks oriented\" sqlite wrapping tool for Objective-C"
   s.homepage         = "https://github.com/CopyIsRight/SQLAid"
