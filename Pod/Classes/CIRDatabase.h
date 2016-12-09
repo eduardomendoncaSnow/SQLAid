@@ -15,11 +15,11 @@
 
 @interface CIRDatabase : NSObject
 
-@property(readonly, nonatomic) NSString *path;
-@property(strong, nonatomic) NSString *temporaryDirectory;
-@property(copy, nonatomic) void (^willExecuteBlock)(NSString *);
+@property(readonly, nonatomic, nonnull) NSString *path;
+@property(strong, nonatomic, nonnull) NSString *temporaryDirectory;
+@property(copy, nonatomic, nullable) void (^willExecuteBlock)(NSString *__nonnull);
 
-- (instancetype)initWithPath:(NSString *)databasePath;
+- (nonnull instancetype)initWithPath:(nonnull NSString *)databasePath;
 
 - (void)open;
 
@@ -29,33 +29,33 @@
 
 - (BOOL)isOpen;
 
-- (CIRStatement *)prepareStatement:(NSString *)sql;
+- (nonnull CIRStatement *)prepareStatement:(nonnull NSString *)sql;
 
-- (void)executeStatement:(NSString *)sql;
+- (void)executeStatement:(nonnull NSString *)sql;
 
-- (BOOL)executeUpdate:(NSString *)sql;
+- (BOOL)executeUpdate:(nonnull NSString *)sql;
 
-- (BOOL)executeUpdate:(NSString *)sql withNamedParameters:(NSDictionary<NSString *, id> *)parameters;
+- (BOOL)executeUpdate:(nonnull NSString *)sql withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters;
 
-- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)parameters;
+- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)parameters;
 
-- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters;
+- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters;
 
-- (CIRResultSet *)executeQuery:(NSString *)query;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query;
 
-- (CIRResultSet *)executeQuery:(NSString *)query withNamedParameters:(NSDictionary<NSString *, id> *)parameters;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters;
 
-- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)parameters;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)parameters;
 
-- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters;
 
-- (void)executeQuery:(NSString *)query each:(void (^)(CIRResultSet *))handler;
+- (void)executeQuery:(nonnull NSString *)query each:(nonnull void (^)(CIRResultSet *__nonnull))handler;
 
 - (sqlite_int64)lastInsertedId;
 
-- (NSString *)lastErrorMessage;
+- (nullable NSString *)lastErrorMessage;
 
-- (sqlite3 *)handler;
+- (nullable sqlite3 *)handler;
 
 - (BOOL)close;
 

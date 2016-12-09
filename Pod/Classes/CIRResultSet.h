@@ -15,7 +15,7 @@
 
 @interface CIRResultSet : NSObject
 
-- (instancetype)initWithDatabase:(CIRDatabase *)database andStatement:(CIRStatement *)statement;
+- (nonnull instancetype)initWithDatabase:(nonnull CIRDatabase *)database andStatement:(nonnull CIRStatement *)statement;
 
 - (BOOL)next;
 
@@ -27,48 +27,48 @@
 
 - (int)columnCount;
 
-- (int)columnIndexWithName:(NSString *)columnName;
+- (int)columnIndexWithName:(nonnull NSString *)columnName;
 
 - (int)columnTypeAtIndex:(int)columnIndex;
 
 - (int)intAtIndex:(int)columnIndex;
 
-- (int)intWithColumnName:(NSString *)columnName;
+- (int)intWithColumnName:(nonnull NSString *)columnName;
 
 - (long)longAtIndex:(int)columnIndex;
 
-- (long)longWithColumnName:(NSString *)columnName;
+- (long)longWithColumnName:(nonnull NSString *)columnName;
 
 - (sqlite3_int64)longLongAtIndex:(int)columnIndex;
 
-- (sqlite3_int64)longLongWithColumnName:(NSString *)columnName;
+- (sqlite3_int64)longLongWithColumnName:(nonnull NSString *)columnName;
 
 - (double)doubleAtIndex:(int)columnIndex;
 
-- (double)doubleWithColumnName:(NSString *)columnName;
+- (double)doubleWithColumnName:(nonnull NSString *)columnName;
 
 - (BOOL)boolAtIndex:(int)columnIndex;
 
-- (BOOL)boolWithColumnName:(NSString *)columnName;
+- (BOOL)boolWithColumnName:(nonnull NSString *)columnName;
 
-- (NSString *)textAtIndex:(int)columnIndex;
+- (nullable NSString *)textAtIndex:(int)columnIndex;
 
-- (NSString *)textWithColumnName:(NSString *)columnName;
+- (nullable NSString *)textWithColumnName:(nonnull NSString *)columnName;
 
-- (NSDate *)unixDateAtIndex:(int)columnIndex;
+- (nullable NSDate *)unixDateAtIndex:(int)columnIndex;
 
-- (NSDate *)unixDateWithColumnName:(NSString *)columnName;
+- (nullable NSDate *)unixDateWithColumnName:(nonnull NSString *)columnName;
 
-- (NSDecimalNumber *)decimalNumberAtIndex:(int)columnIndex;
+- (nullable NSDecimalNumber *)decimalNumberAtIndex:(int)columnIndex;
 
-- (NSDecimalNumber *)decimalNumberWithColumnName:(NSString *)columnName;
+- (nullable NSDecimalNumber *)decimalNumberWithColumnName:(nonnull NSString *)columnName;
 
-- (id)objectAtIndex:(NSUInteger)columnIndex;
+- (nullable id)objectAtIndex:(NSUInteger)columnIndex;
 
-- (id)objectWithColumnName:(NSString *)columnName;
+- (nullable id)objectWithColumnName:(nonnull NSString *)columnName;
 
-- (id)objectAtIndexedSubscript:(NSUInteger)index;
+- (nullable id)objectAtIndexedSubscript:(NSUInteger)index;
 
-- (NSString *)sql;
+- (nullable NSString *)sql;
 
 @end

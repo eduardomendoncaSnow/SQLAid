@@ -24,7 +24,7 @@
 	{
 		_stmt = stmt;
 
-		_columnCount = sqlite3_column_count(stmt);
+		_columnCount = (NSUInteger) sqlite3_column_count(stmt);
 
 		NSMutableDictionary *columnNameIndexes = [[NSMutableDictionary alloc] initWithCapacity:_columnCount];
 
