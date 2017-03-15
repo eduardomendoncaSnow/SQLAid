@@ -17,9 +17,9 @@
 
 - (nonnull instancetype)initWithDatabase:(nonnull CIRDatabase *)database andStatement:(nonnull CIRStatement *)statement;
 
-- (BOOL)next:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)next:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
-- (BOOL)close:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)close:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
 - (BOOL)isClosed;
 

@@ -21,35 +21,35 @@
 
 - (nonnull instancetype)initWithPath:(nonnull NSString *)databasePath;
 
-- (void)open:(nullable NSError **)error;
+- (void)open:(NSError __nullable* __nullable*)error;
 
-- (void)openWithFlags:(int)flags error:(nullable NSError **)error;
+- (void)openWithFlags:(int)flags error:(NSError __nullable* __nullable*)error;
 
 - (BOOL)isClosed;
 
 - (BOOL)isOpen;
 
-- (nonnull CIRStatement *)prepareStatement:(nonnull NSString *)sql error:(nullable NSError **)error;
+- (nonnull CIRStatement *)prepareStatement:(nonnull NSString *)sql error:(NSError __nullable* __nullable*)error;
 
-- (void)executeStatement:(nonnull NSString *)sql error:(nullable NSError **)error;
+- (void)executeStatement:(nonnull NSString *)sql error:(NSError __nullable* __nullable*)error;
 
-- (BOOL)executeUpdate:(nonnull NSString *)sql error:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)executeUpdate:(nonnull NSString *)sql error:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
-- (BOOL)executeUpdate:(nonnull NSString *)sql withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)executeUpdate:(nonnull NSString *)sql withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
-- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)parameters error:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)parameters error:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
-- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query error:(nullable NSError **)error;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query error:(NSError __nullable* __nullable*)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(nullable NSError **)error;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(NSError __nullable* __nullable*)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)parameters error:(nullable NSError **)error;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)parameters error:(NSError __nullable* __nullable*)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(nullable NSError **)error;
+- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(NSError __nullable* __nullable*)error;
 
-- (void)executeQuery:(nonnull NSString *)query error:(nullable NSError **)error each:(nonnull void (^)(CIRResultSet *__nonnull))handler;
+- (void)executeQuery:(nonnull NSString *)query error:(NSError __nullable* __nullable*)error each:(nonnull void (^)(CIRResultSet *__nonnull))handler;
 
 - (sqlite_int64)lastInsertedId;
 
@@ -57,6 +57,6 @@
 
 - (nullable sqlite3 *)handler;
 
-- (BOOL)close:(nullable NSError **)error __attribute__((warn_unused_result));
+- (BOOL)close:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
 
 @end
