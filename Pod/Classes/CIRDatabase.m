@@ -79,7 +79,7 @@
 		return nil;
 	}
 
-	return [[CIRStatement alloc] initWithStmt:stmt];
+	return [[CIRStatement alloc] initWithStmt:stmt database:self];
 }
 
 - (void)executeStatement:(NSString *)sql error:(NSError **)error;
@@ -126,7 +126,7 @@
 {
 	CIRResultSet *resultSet = [self executeQuery:query error:error];
 
-	while ([resultSet next])
+	while ([resultSet next:error])
 		handler(resultSet);
 }
 
@@ -168,7 +168,8 @@
 
 	int resultCode = [statement step];
 
-	[statement close];
+	if ([statement close:error] != SQLITE_OK)
+		return NO;
 
 	BOOL success = resultCode == SQLITE_DONE;
 
@@ -221,7 +222,7 @@
 
 	if (bindCount != bindTotalCount)
 	{
-		[statement close];
+		[statement close:error];
 
 		if (error)
 			*error = [self createErrorWithCode:SQLITE_MISMATCH message:@"The bind count is not correct for the number of variables"];
