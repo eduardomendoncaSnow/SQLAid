@@ -12,26 +12,26 @@
 @interface CIRStatement ()
 
 @property (assign, nonatomic) sqlite3_stmt *stmt;
+@property (weak, nonatomic) CIRDatabase *database;
 @property (strong, nonatomic) NSDictionary<NSString *, NSNumber *> *columnNameIndexes;
 
 @end
 
 @implementation CIRStatement
 
-- (instancetype)initWithStmt:(sqlite3_stmt *)stmt
+- (instancetype)initWithStmt:(sqlite3_stmt *)stmt database:(CIRDatabase *)database
 {
 	if (self = [super init])
 	{
 		_stmt = stmt;
+		_database = database;
 
 		_columnCount = (NSUInteger) sqlite3_column_count(stmt);
 
 		NSMutableDictionary *columnNameIndexes = [[NSMutableDictionary alloc] initWithCapacity:_columnCount];
 
 		for (int i = 0; i < _columnCount; i++)
-		{
 			columnNameIndexes[[NSString stringWithUTF8String:sqlite3_column_name(stmt, i)]] = @(i);
-		}
 
 		_columnNameIndexes = [NSDictionary dictionaryWithDictionary:columnNameIndexes];
 
@@ -96,7 +96,7 @@
 	else if ([object isKindOfClass:[NSNumber class]])
 	{
 		const char *type = [object objCType];
-		BOOL isBoolean = CFBooleanGetTypeID() == CFGetTypeID((__bridge_retained CFBooleanRef)object);
+		BOOL isBoolean = CFBooleanGetTypeID() == CFGetTypeID((__bridge_retained CFBooleanRef) object);
 
 		if (strcmp(type, @encode(int)) == 0 || isBoolean)
 			resultCode = [self bindInt:[object intValue] atIndex:index];
@@ -114,7 +114,7 @@
 			resultCode = SQLITE_MISUSE; // TODO throws type unknown
 	}
 	else if ([object isKindOfClass:[NSDate class]])
-		resultCode = [self bindLong:(long)([object timeIntervalSince1970] * 1000) atIndex:index];
+		resultCode = [self bindLong:(long) ([object timeIntervalSince1970] * 1000) atIndex:index];
 	else if ([object isKindOfClass:[NSDecimalNumber class]])
 		resultCode = [self bindDouble:[object doubleValue] atIndex:index];
 	else
@@ -212,11 +212,14 @@
 	return _stmt == NULL;
 }
 
-- (int)close
+- (int)close:(nullable NSError **)error
 {
 	int resultCode = sqlite3_finalize(_stmt);
 
-	if (resultCode == SQLITE_OK) _stmt = NULL;
+	if (resultCode == SQLITE_OK)
+		_stmt = NULL;
+	else if (error)
+		*error = [self createErrorWithCode:resultCode];
 
 	return resultCode;
 }
@@ -230,6 +233,16 @@
 {
 	const char *sql = sqlite3_sql(_stmt);
 	return sql ? [NSString stringWithUTF8String:sql] : nil;
+}
+
+- (NSError *)createErrorWithCode:(int)code
+{
+	return [self createErrorWithCode:code message:[_database lastErrorMessage]];
+}
+
+- (NSError *)createErrorWithCode:(int)code message:(NSString *)message
+{
+	return [NSError errorWithDomain:@"SQLAid" code:code userInfo:@{NSLocalizedDescriptionKey : message}];
 }
 
 @end

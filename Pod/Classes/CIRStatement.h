@@ -16,7 +16,7 @@
 
 @property(readonly, nonatomic) NSUInteger columnCount;
 
-- (nonnull instancetype)initWithStmt:(nonnull sqlite3_stmt *)stmt;
+- (nonnull instancetype)initWithStmt:(nonnull sqlite3_stmt *)stmt database:(nonnull CIRDatabase *)database;
 
 - (int)bindInt:(int)value atIndex:(int)index;
 
@@ -66,10 +66,10 @@
 
 - (BOOL)isClosed;
 
-- (int)close;
+- (int)close:(nullable NSError **)error __attribute__((warn_unused_result));
 
 - (nullable sqlite3_stmt *)handler;
 
-- (nonnull NSString *)sql;
+- (nullable NSString *)sql;
 
 @end

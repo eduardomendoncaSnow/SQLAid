@@ -31,24 +31,25 @@
 	return self;
 }
 
-- (BOOL)next
+- (BOOL)next:(NSError **)error
 {
 	BOOL value;
 	int resultCode = [_statement step];
 	
-	if ((value = resultCode != SQLITE_ROW && [self close]))
+	if ((value = resultCode != SQLITE_ROW && [self close:error]))
 	{
-		if (resultCode != SQLITE_DONE) @throw [NSException exceptionWithName:@"Can't execute next" reason:[_database lastErrorMessage] userInfo:nil];
+		if (resultCode != SQLITE_DONE && error)
+			*error = [self createErrorWithCode:resultCode];
 	}
 	
 	return !value;
 }
 
-- (BOOL)close
+- (BOOL)close:(NSError **)error
 {
 	if ([_statement isClosed]) return YES;
 	
-	return [_statement close] == SQLITE_OK;
+	return [_statement close:error] == SQLITE_OK;
 }
 
 - (BOOL)isClosed
@@ -174,6 +175,16 @@
 - (id)objectAtIndexedSubscript:(NSUInteger)index
 {
 	return [self objectAtIndex:index];
+}
+
+- (NSError *)createErrorWithCode:(int)code
+{
+	return [self createErrorWithCode:code message:[_database lastErrorMessage]];
+}
+
+- (NSError *)createErrorWithCode:(int)code message:(NSString *)message
+{
+	return [NSError errorWithDomain:@"SQLAid" code:code userInfo:@{NSLocalizedDescriptionKey : message}];
 }
 
 @end
