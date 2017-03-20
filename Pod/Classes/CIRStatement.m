@@ -212,7 +212,7 @@
 	return _stmt == NULL;
 }
 
-- (int)close:(nullable NSError **)error
+- (int)close:(NSError **)error
 {
 	int resultCode = sqlite3_finalize(_stmt);
 

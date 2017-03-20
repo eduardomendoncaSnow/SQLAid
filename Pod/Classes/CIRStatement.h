@@ -66,7 +66,7 @@
 
 - (BOOL)isClosed;
 
-- (int)close:(NSError __nullable* __nullable*)error __attribute__((warn_unused_result));
+- (int)close:(NSError *_Nullable *_Nullable)error __attribute__((warn_unused_result));
 
 - (nullable sqlite3_stmt *)handler;
 
