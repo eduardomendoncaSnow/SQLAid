@@ -212,7 +212,7 @@
 	return _stmt == NULL;
 }
 
-- (int)close:(NSError **)error
+- (NSNumber *)close:(NSError **)error
 {
 	int resultCode = sqlite3_finalize(_stmt);
 
@@ -221,7 +221,7 @@
 	else if (error)
 		*error = [self createErrorWithCode:resultCode];
 
-	return resultCode;
+	return @(resultCode);
 }
 
 - (sqlite3_stmt *)handler

@@ -21,17 +21,17 @@
 
 - (nonnull instancetype)initWithPath:(nonnull NSString *)databasePath;
 
-- (void)open:(NSError *_Nullable *_Nullable)error;
+- (BOOL)open:(NSError *_Nullable *_Nullable)error;
 
-- (void)openWithFlags:(int)flags error:(NSError *_Nullable *_Nullable)error;
+- (BOOL)openWithFlags:(int)flags error:(NSError *_Nullable *_Nullable)error;
 
 - (BOOL)isClosed;
 
 - (BOOL)isOpen;
 
-- (nonnull CIRStatement *)prepareStatement:(nonnull NSString *)sql error:(NSError *_Nullable *_Nullable)error;
+- (nullable CIRStatement *)prepareStatement:(nonnull NSString *)sql error:(NSError *_Nullable *_Nullable)error;
 
-- (void)executeStatement:(nonnull NSString *)sql error:(NSError *_Nullable *_Nullable)error;
+- (BOOL)executeStatement:(nonnull NSString *)sql error:(NSError *_Nullable *_Nullable)error;
 
 - (BOOL)executeUpdate:(nonnull NSString *)sql error:(NSError *_Nullable *_Nullable)error __attribute__((warn_unused_result));
 
@@ -41,15 +41,15 @@
 
 - (BOOL)executeUpdate:(nonnull NSString *)sql withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(NSError *_Nullable *_Nullable)error __attribute__((warn_unused_result));
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query error:(NSError *_Nullable *_Nullable)error;
+- (nullable CIRResultSet *)executeQuery:(nonnull NSString *)query error:(NSError *_Nullable *_Nullable)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(NSError *_Nullable *_Nullable)error;
+- (nullable CIRResultSet *)executeQuery:(nonnull NSString *)query withNamedParameters:(nullable NSDictionary<NSString *, id> *)parameters error:(NSError *_Nullable *_Nullable)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)parameters error:(NSError *_Nullable *_Nullable)error;
+- (nullable CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)parameters error:(NSError *_Nullable *_Nullable)error;
 
-- (nonnull CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(NSError *_Nullable *_Nullable)error;
+- (nullable CIRResultSet *)executeQuery:(nonnull NSString *)query withParameters:(nullable NSArray<id> *)listParameters orNamedParameters:(nullable NSDictionary<NSString *, id> *)namedParameters error:(NSError *_Nullable *_Nullable)error;
 
-- (void)executeQuery:(nonnull NSString *)query error:(NSError *_Nullable *_Nullable)error each:(nonnull void (^)(CIRResultSet *__nonnull))handler;
+- (BOOL)executeQuery:(nonnull NSString *)query error:(NSError *_Nullable *_Nullable)error each:(nonnull void (^)(CIRResultSet *__nonnull))handler;
 
 - (sqlite_int64)lastInsertedId;
 

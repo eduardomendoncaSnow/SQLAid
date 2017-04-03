@@ -32,19 +32,24 @@
 	return self;
 }
 
-- (void)open:(NSError **)error
+- (BOOL)open:(NSError **)error
 {
-	[self openWithFlags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX error:error];
+	return [self openWithFlags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX error:error];
 }
 
-- (void)openWithFlags:(int)flags error:(NSError **)error
+- (BOOL)openWithFlags:(int)flags error:(NSError **)error
 {
 	int rc = sqlite3_open_v2([_path UTF8String], &_database, flags, 0);
 
 	if (rc != SQLITE_OK && error)
+	{
 		*error = [self createErrorWithCode:rc];
+		return NO;
+	}
 
 	[self setTemporaryDirectory:_temporaryDirectory];
+	
+	return YES;
 }
 
 - (BOOL)isClosed
@@ -82,14 +87,21 @@
 	return [[CIRStatement alloc] initWithStmt:stmt database:self];
 }
 
-- (void)executeStatement:(NSString *)sql error:(NSError **)error;
+- (BOOL)executeStatement:(NSString *)sql error:(NSError **)error;
 {
 	char *outError;
 
 	int resultCode = sqlite3_exec(_database, [sql UTF8String], 0, 0, &outError);
 
-	if (resultCode != SQLITE_OK && error)
-		*error = [self createErrorWithCode:resultCode message:[NSString stringWithUTF8String:outError]];
+	if (resultCode != SQLITE_OK)
+	{
+		if (error)
+			*error = [self createErrorWithCode:resultCode message:[NSString stringWithUTF8String:outError]];
+		
+		return NO;
+	}
+	
+	return YES;
 }
 
 - (BOOL)executeUpdate:(NSString *)sql error:(NSError **)error;
@@ -122,12 +134,14 @@
 	return [self executeQuery:query withParameters:parameters orNamedParameters:nil error:error];
 }
 
-- (void)executeQuery:(NSString *)query error:(NSError **)error each:(void (^)(CIRResultSet *))handler
+- (BOOL)executeQuery:(NSString *)query error:(NSError **)error each:(void (^)(CIRResultSet *))handler
 {
 	CIRResultSet *resultSet = [self executeQuery:query error:error];
 
 	while ([resultSet next:error])
 		handler(resultSet);
+	
+	return YES;
 }
 
 - (sqlite_int64)lastInsertedId

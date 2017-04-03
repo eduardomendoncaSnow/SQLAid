@@ -57,7 +57,7 @@
 	return [_statement isClosed];
 }
 
-- (int)columnCount
+- (NSUInteger)columnCount
 {
 	return [_statement columnCount];
 }
