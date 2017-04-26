@@ -21,6 +21,8 @@
 
 - (nonnull instancetype)initWithPath:(nonnull NSString *)databasePath;
 
+- (nonnull instancetype)initWithHandler:(nonnull sqlite3 *)handler;
+
 - (BOOL)open:(NSError *_Nullable *_Nullable)error;
 
 - (BOOL)openWithFlags:(int)flags error:(NSError *_Nullable *_Nullable)error;

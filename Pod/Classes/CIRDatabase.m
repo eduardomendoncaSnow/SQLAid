@@ -32,6 +32,14 @@
 	return self;
 }
 
+- (nonnull instancetype)initWithHandler:(nonnull sqlite3 *)handler
+{
+	if (self = [super init])
+		_database = handler;
+	
+	return self;
+}
+
 - (BOOL)open:(NSError **)error
 {
 	return [self openWithFlags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX error:error];
