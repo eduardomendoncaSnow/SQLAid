@@ -49,7 +49,7 @@
 {
 	if ([_statement isClosed]) return YES;
 	
-	return [_statement close:error] == SQLITE_OK;
+	return [[_statement close:error] intValue] == SQLITE_OK;
 }
 
 - (BOOL)isClosed

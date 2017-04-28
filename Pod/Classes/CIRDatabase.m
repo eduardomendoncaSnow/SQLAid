@@ -189,8 +189,8 @@
 	if (_willExecuteBlock != nil) _willExecuteBlock(sql);
 
 	int resultCode = [statement step];
-
-	if ([statement close:error] != SQLITE_OK)
+	
+	if ([[statement close:error] intValue] != SQLITE_OK)
 		return NO;
 
 	BOOL success = resultCode == SQLITE_DONE;
