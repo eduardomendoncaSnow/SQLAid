@@ -13,8 +13,8 @@
 
 @interface CIRDatabase ()
 
-@property(assign, nonatomic) sqlite3 *database;
-@property(readwrite, nonatomic) NSString *path;
+@property (assign, nonatomic) sqlite3 *database;
+@property (readwrite, nonatomic) NSString *path;
 
 @end
 
@@ -32,21 +32,32 @@
 	return self;
 }
 
-- (void)open
+- (nonnull instancetype)initWithHandler:(nonnull sqlite3 *)handler
 {
-	[self openWithFlags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX];
+	if (self = [super init])
+		_database = handler;
+	
+	return self;
 }
 
-- (void)openWithFlags:(int)flags
+- (BOOL)open:(NSError **)error
+{
+	return [self openWithFlags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX error:error];
+}
+
+- (BOOL)openWithFlags:(int)flags error:(NSError **)error
 {
 	int rc = sqlite3_open_v2([_path UTF8String], &_database, flags, 0);
 
-	if (rc != SQLITE_OK)
+	if (rc != SQLITE_OK && error)
 	{
-		@throw [NSException exceptionWithName:@"Can't open database" reason:[self lastErrorMessage] userInfo:nil];
+		*error = [self createErrorWithCode:rc];
+		return NO;
 	}
 
 	[self setTemporaryDirectory:_temporaryDirectory];
+	
+	return YES;
 }
 
 - (BOOL)isClosed
@@ -62,14 +73,12 @@
 - (void)setTemporaryDirectory:(NSString *)temporaryDirectory
 {
 	if ([self isOpen])
-	{
 		sqlite3_temp_directory = (char *) [temporaryDirectory UTF8String];
-	}
 
 	_temporaryDirectory = temporaryDirectory;
 }
 
-- (CIRStatement *)prepareStatement:(NSString *)sql
+- (CIRStatement *)prepareStatement:(NSString *)sql error:(NSError **)error;
 {
 	sqlite3_stmt *stmt;
 
@@ -77,13 +86,16 @@
 
 	if (resultCode != SQLITE_OK)
 	{
-		@throw [NSException exceptionWithName:[NSString stringWithFormat:@"Can't prepare statement %@", sql] reason:[self lastErrorMessage] userInfo:nil];
+		if (error)
+			*error = [self createErrorWithCode:resultCode];
+
+		return nil;
 	}
 
-	return [[CIRStatement alloc] initWithStmt:stmt];
+	return [[CIRStatement alloc] initWithStmt:stmt database:self];
 }
 
-- (void)executeStatement:(NSString *)sql
+- (BOOL)executeStatement:(NSString *)sql error:(NSError **)error;
 {
 	char *outError;
 
@@ -91,46 +103,53 @@
 
 	if (resultCode != SQLITE_OK)
 	{
-		@throw [NSException exceptionWithName:[NSString stringWithFormat:@"Can't execute statement %@", sql] reason:[NSString stringWithUTF8String:outError] userInfo:nil];
+		if (error)
+			*error = [self createErrorWithCode:resultCode message:[NSString stringWithUTF8String:outError]];
+		
+		return NO;
 	}
+	
+	return YES;
 }
 
-- (BOOL)executeUpdate:(NSString *)sql
+- (BOOL)executeUpdate:(NSString *)sql error:(NSError **)error;
 {
-	return [self executeUpdate:sql withParameters:nil];
+	return [self executeUpdate:sql withParameters:nil error:error];
 }
 
-- (BOOL)executeUpdate:(NSString *)sql withNamedParameters:(NSDictionary<NSString *, id> *)parameters
+- (BOOL)executeUpdate:(NSString *)sql withNamedParameters:(NSDictionary<NSString *, id> *)parameters error:(NSError **)error;
 {
-	return [self executeUpdate:sql withParameters:nil orNamedParameters:parameters];
+	return [self executeUpdate:sql withParameters:nil orNamedParameters:parameters error:error];
 }
 
-- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)parameters
+- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)parameters error:(NSError **)error;
 {
-	return [self executeUpdate:sql withParameters:parameters orNamedParameters:nil];
+	return [self executeUpdate:sql withParameters:parameters orNamedParameters:nil error:error];
 }
 
-- (CIRResultSet *)executeQuery:(NSString *)query
+- (CIRResultSet *)executeQuery:(NSString *)query error:(NSError **)error;
 {
-	return [self executeQuery:query withParameters:nil];
+	return [self executeQuery:query withParameters:nil error:error];
 }
 
-- (CIRResultSet *)executeQuery:(NSString *)query withNamedParameters:(NSDictionary<NSString *, id> *)parameters
+- (CIRResultSet *)executeQuery:(NSString *)query withNamedParameters:(NSDictionary<NSString *, id> *)parameters error:(NSError **)error;
 {
-	return [self executeQuery:query withParameters:nil orNamedParameters:parameters];
+	return [self executeQuery:query withParameters:nil orNamedParameters:parameters error:error];
 }
 
-- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)parameters
+- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)parameters error:(NSError **)error;
 {
-	return [self executeQuery:query withParameters:parameters orNamedParameters:nil];
+	return [self executeQuery:query withParameters:parameters orNamedParameters:nil error:error];
 }
 
-- (void)executeQuery:(NSString *)query each:(void (^)(CIRResultSet *))handler
+- (BOOL)executeQuery:(NSString *)query error:(NSError **)error each:(void (^)(CIRResultSet *))handler
 {
-	CIRResultSet *resultSet = [self executeQuery:query];
+	CIRResultSet *resultSet = [self executeQuery:query error:error];
 
-	while ([resultSet next])
+	while ([resultSet next:error])
 		handler(resultSet);
+	
+	return YES;
 }
 
 - (sqlite_int64)lastInsertedId
@@ -149,36 +168,55 @@
 	return _database;
 }
 
-- (BOOL)close
+- (BOOL)close:(NSError **)error;
 {
-	return sqlite3_close_v2(_database) == SQLITE_OK;
+	int resultCode = sqlite3_close_v2(_database);
+
+	BOOL success = resultCode == SQLITE_OK;
+
+	if (!success && error)
+		*error = [self createErrorWithCode:resultCode];
+
+	return success;
 }
 
-- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters
+- (BOOL)executeUpdate:(NSString *)sql withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters error:(NSError **)error;
 {
-	CIRStatement *statement = [self compileStatement:sql withParameters:listParameters namedParameters:namedParameters];
+	CIRStatement *statement = [self compileStatement:sql withParameters:listParameters namedParameters:namedParameters error:error];
+
+	if (statement == nil) return NO;
 
 	if (_willExecuteBlock != nil) _willExecuteBlock(sql);
 
 	int resultCode = [statement step];
+	
+	if ([[statement close:error] intValue] != SQLITE_OK)
+		return NO;
 
-	[statement close];
+	BOOL success = resultCode == SQLITE_DONE;
 
-	return resultCode == SQLITE_DONE;
+	if (!success && error)
+		*error = [self createErrorWithCode:resultCode];
+
+	return success;
 }
 
-- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters
+- (CIRResultSet *)executeQuery:(NSString *)query withParameters:(NSArray<id> *)listParameters orNamedParameters:(NSDictionary<NSString *, id> *)namedParameters error:(NSError **)error;
 {
-	CIRStatement *statement = [self compileStatement:query withParameters:listParameters namedParameters:namedParameters];
+	CIRStatement *statement = [self compileStatement:query withParameters:listParameters namedParameters:namedParameters error:error];
+
+	if (statement == nil) return nil;
 
 	if (_willExecuteBlock != nil) _willExecuteBlock(query);
 
 	return [[CIRResultSet alloc] initWithDatabase:self andStatement:statement];
 }
 
-- (CIRStatement *)compileStatement:(NSString *)sql withParameters:(NSArray<id> *)listParameters namedParameters:(NSDictionary<NSString *, id> *)namedParameters
+- (CIRStatement *)compileStatement:(NSString *)sql withParameters:(NSArray<id> *)listParameters namedParameters:(NSDictionary<NSString *, id> *)namedParameters error:(NSError **)error;
 {
-	CIRStatement *statement = [self prepareStatement:sql];
+	CIRStatement *statement = [self prepareStatement:sql error:error];
+
+	if (statement == nil) return nil;
 
 	int bindCount = 0, bindTotalCount = [statement bindParameterCount];
 
@@ -202,18 +240,29 @@
 	bindCount = (int) values.count;
 
 	for (int i = 0; i < bindCount; i++)
-	{
 		[statement bindObject:values[(NSUInteger) i] atIndex:i + 1];
-	}
 
 	if (bindCount != bindTotalCount)
 	{
-		[statement close];
+		[statement close:error];
 
-		@throw [NSException exceptionWithName:@"Bind count invalid" reason:@"The bind count is not correct for the number of variables" userInfo:nil];
+		if (error)
+			*error = [self createErrorWithCode:SQLITE_MISMATCH message:@"The bind count is not correct for the number of variables"];
+
+		return nil;
 	}
 
 	return statement;
+}
+
+- (NSError *)createErrorWithCode:(int)code
+{
+	return [self createErrorWithCode:code message:[self lastErrorMessage]];
+}
+
+- (NSError *)createErrorWithCode:(int)code message:(NSString *)message
+{
+	return [NSError errorWithDomain:@"SQLAid" code:code userInfo:@{NSLocalizedDescriptionKey : message}];
 }
 
 @end

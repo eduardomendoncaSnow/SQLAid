@@ -17,15 +17,15 @@
 
 - (nonnull instancetype)initWithDatabase:(nonnull CIRDatabase *)database andStatement:(nonnull CIRStatement *)statement;
 
-- (BOOL)next;
+- (BOOL)next:(NSError *_Nullable *_Nullable)error;
 
-- (BOOL)close;
+- (BOOL)close:(NSError *_Nullable *_Nullable)error;
 
 - (BOOL)isClosed;
 
 - (BOOL)isColumnAtIndexNull:(int)columnIndex;
 
-- (int)columnCount;
+- (NSUInteger)columnCount;
 
 - (int)columnIndexWithName:(nonnull NSString *)columnName;
 
