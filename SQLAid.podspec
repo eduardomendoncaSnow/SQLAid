@@ -15,9 +15,9 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Pietro Caselani" => "pietro.caselani@involves.com.br" }
   s.source           = { :git => "https://github.com/CopyIsRight/SQLAid.git", :tag => s.version.to_s }
-  s.platform         = :ios, '8.0'
+  s.platform         = :ios, '10.0'
   s.requires_arc     = true
   s.source_files     = 'Pod/Classes/**/*'
   
-  s.dependency 'sqlite3'
+  s.dependency 'sqlite3', '3.33.0'
 end
