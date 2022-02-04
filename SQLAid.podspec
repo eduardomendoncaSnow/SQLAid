@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
   s.source_files     = 'Pod/Classes/**/*'
   
-  s.dependency 'sqlite3', '3.33.0'
+#   s.dependency 'sqlite3', '3.33.0'
 end
