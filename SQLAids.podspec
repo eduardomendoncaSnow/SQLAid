@@ -7,14 +7,14 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "SQLAid"
+  s.name             = "SQLAids"
   s.version          = "0.2.0"
   s.summary          = "Small SQLite wrapper."
   s.description      = "Small \"blocks oriented\" sqlite wrapping tool for Objective-C"
-  s.homepage         = "https://github.com/CopyIsRight/SQLAid"
+  s.homepage         = "https://github.com/eduardomendoncaSnow/SQLAids"
   s.license          = 'MIT'
   s.author           = { "Pietro Caselani" => "pietro.caselani@involves.com.br" }
-  s.source           = { :git => "https://github.com/CopyIsRight/SQLAid.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/eduardomendoncaSnow/SQLAids", :tag => s.version.to_s }
   s.platform         = :ios, '10.0'
   s.requires_arc     = true
   s.source_files     = 'Pod/Classes/**/*'
